@@ -30,6 +30,7 @@ following are some test runs:
 dbt 语义层问答系统 | 输入 'exit' 退出
 
 问题：2003年摩托车销量多少？
+
 select
     count(*) as motorcycle_order_count
 from (
@@ -51,6 +52,7 @@ where product_name = 'Motorcycles'
 (109,)
 
 问题：2003年摩托车收入多少？
+
 select sum(order_sale) as motorcycle_revenue
 from (
     select
@@ -71,6 +73,7 @@ where product_name = 'Motorcycles'
 (370895.58,)
 
 问题：2004年巴士和火车收入占比多少？
+
 select
     sum(case when product_name = 'Trucks and Buses' then order_sale else 0 end) * 1.0 / sum(order_sale) as truck_and_bus_revenue_pct
 from (
@@ -94,6 +97,7 @@ from (
 (0.11014712487234204,)
 
 问题：2003年美国用户销量多少？
+
 select sum(order_sale) as total_sales_2003_usa
 from (
     select
@@ -123,6 +127,7 @@ and country = 'USA'
 (1305147.8799999997,)
 
 问题：2003年美国用户销量占北美比例多少？
+
 select
     sum(case when customers.country = 'USA' then orders.order_sale else 0 end) as usa_sales,
     sum(orders.order_sale) as na_sales,
@@ -158,6 +163,7 @@ where
 (1305147.8799999997, 1359757.3799999997, 0.9598387912408315)
 
 问题：2003年美国销量最高的5个用户名和销量分别是多少？
+
 select
   customer_name,
   sum(order_sale) as total_sales
