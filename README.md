@@ -1,9 +1,13 @@
 ### This is a test project for openai with dbt semantic model
 
 dbt version: 1.10.3
+
 python version: 3.11.5
+
 os info: Windows-10-10.0.26100-SP0
+
 adapter type: duckdb
+
 adapter version: 1.9.4
 
 ai model: gpt-4.1-mini
