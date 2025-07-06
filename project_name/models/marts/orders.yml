@@ -1,0 +1,118 @@
+semantic_models:
+  - name: orders
+    defaults:
+      agg_time_dimension: order_date
+    description: |
+      Model containing order data. The grain of the table is the order_id+order_sub_id.
+    model: ref('stg_orders')
+    entities: 
+      # we use the column for the name here because order is a reserved word in SQL
+      - name: order_id_order_sub_id
+        type: primary
+        expr: order_id || '|' || order_sub_id
+      - name: product
+        type: foreign
+        expr: product_id
+      - name: customer
+        type: foreign
+        expr: customer_id
+    dimensions:
+      - name: order_date
+        expr: date_trunc('day', order_date)
+        type: time
+        type_params:
+          time_granularity: day
+      - name: product_name
+        type: categorical
+    measures:
+      - name: order_total
+        description: The total revenue for each order.
+        agg: sum
+      - name: order_count
+        description: The count of individual orders.
+        expr: 1
+        agg: sum
+  - name: customers
+    description: |
+      Model containing customer data. The grain of the table is customer_id.
+    model: ref('stg_customers')
+    entities:
+      - name: customer
+        type: primary
+        expr: customer_id
+    dimensions:
+      - name: customer_name
+        type: categorical
+      - name: country
+        type: categorical
+      - name: territory
+        type: categorical
+metrics:
+  - name: revenue
+    description: Sum of the order total.
+    label: Revenue
+    type: simple
+    type_params:
+      measure: order_total
+  - name: motorcycle_revenue
+    description: the revenue from motorcycle
+    label: Motorcycle Revenue
+    type: simple
+    type_params:
+       measure: order_total
+    filter: |
+      {{ Dimension('orders__product_name') }} = 'Motorcycles'
+  - name: motorcycle_revenue_pct
+    description: the % of order revenue from motorcycle
+    label: Motorcycle Revenue %
+    type: ratio
+    type_params:
+      numerator: motorcycle_revenue
+      denominator: revenue
+  - name: truck_and_bus_revenue
+    description: the revenue from truck and bus
+    label: Truck and Bus Revenue
+    type: simple
+    type_params:
+       measure: order_total
+    filter: |
+      {{ Dimension('orders__product_name') }} = 'Trucks and Buses'
+  - name: truck_and_bus_revenue_pct
+    description: the % of order revenue from truck and bus
+    label: Truck and Bus Revenue %
+    type: ratio
+    type_params:
+      numerator: truck_and_bus_revenue
+      denominator: revenue
+  - name: usa_revenue
+    description: the revenue from usa
+    label: USA Revenue
+    type: simple
+    type_params:
+       measure: order_total
+    filter: |
+      {{ Dimension('customers__country') }} = 'USA'
+  - name: france_revenue
+    description: the revenue from france
+    label: France Revenue
+    type: simple
+    type_params:
+       measure: order_total
+    filter: |
+      {{ Dimension('customers__country') }} = 'France'
+  - name: na_revenue
+    description: the revenue from NA
+    label: NA Revenue
+    type: simple
+    type_params:
+       measure: order_total
+    filter: |
+      {{ Dimension('customers__territory') }} = 'NA'
+  - name: emea_revenue
+    description: the revenue from EMEA
+    label: EMEA Revenue
+    type: simple
+    type_params:
+       measure: order_total
+    filter: |
+      {{ Dimension('customers__territory') }} = 'EMEA'

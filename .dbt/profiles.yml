@@ -1,0 +1,7 @@
+project_name:  # This matches the name in dbt_project.yml file
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ./test/test.duckdb
+      threads: 1
