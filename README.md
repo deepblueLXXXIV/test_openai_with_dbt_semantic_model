@@ -17,6 +17,7 @@ need to pip install langchain_core, langchain_openai, langchain_core.prompts alo
 data is taken from https://www.kaggle.com/datasets/kyanyoga/sample-sales-data/data and split to 2 tables orders + customers into duckdb database file located under project_name/test/test.duckdb 
 
 the base sql is stored under project_name/models/staging
+
 model is stored under project_name/models/marts/oders.yml
 
 to test run following
@@ -26,7 +27,9 @@ to test run following
 - cd to the project_name folder and run python test.py
 
 after compilation, the process will create manifest file under target folder
+
 we will get all needed information from the manifest file for the AI to generate sql based on input question
+
 the models and base sql should be loaded in a for loop, as a test project this part is hardcoded
 
 following are some test runs:
