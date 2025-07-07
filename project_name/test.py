@@ -63,7 +63,7 @@ The return result should be plain sql without thinking process, sql should not h
 # 初始化语言模型
 llm = OpenAI(temperature=0)
 prompt = ChatPromptTemplate.from_template(template=prompt_template)
-model = ChatOpenAI(model="gpt-4.1")
+model = ChatOpenAI(model="gpt-4.1-mini")
 chain = prompt | model | StrOutputParser() 
 
 def execute_query(sql):
