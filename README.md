@@ -12,7 +12,7 @@ adapter version: 1.9.4
 
 ai model: gpt-4.1-mini
 
-need to pip install langchain_core, langchain_openai, langchain_core.prompts along with dbt-core, duckdb, dbt-duckdb (if missed any dependencies, please install accordingly)
+need to pip install langchain_core, langchain_openai along with dbt-core, duckdb, dbt-duckdb (if missed any dependencies, please install accordingly)
 
 data is taken from https://www.kaggle.com/datasets/kyanyoga/sample-sales-data/data and split to 2 tables orders + customers into duckdb database file located under project_name/test/test.duckdb 
 
