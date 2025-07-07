@@ -2,9 +2,6 @@ import json
 import duckdb 
 from dbt.contracts.graph.manifest  import Manifest  # 修正导入路径 
 
-from langchain_openai import OpenAI 
-from langchain.chains import LLMChain 
-from langchain.prompts  import PromptTemplate 
 import yaml 
 from typing import Dict, List 
  
@@ -61,7 +58,6 @@ The return result should be plain sql without thinking process, sql should not h
 """
  
 # 初始化语言模型
-llm = OpenAI(temperature=0)
 prompt = ChatPromptTemplate.from_template(template=prompt_template)
 model = ChatOpenAI(model="gpt-4.1-mini")
 chain = prompt | model | StrOutputParser() 
